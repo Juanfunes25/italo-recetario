@@ -1,0 +1,69 @@
+/* ===========================================================
+   Italo Gelateria — Tema visual "artesanal italiano"
+   Colores: crema, dorado, oliva, terracota.
+   Pensado para dedos con guantes: botones grandes, alto contraste.
+   =========================================================== */
+:root {
+  /* Paleta */
+  --crema: #FAF4E8;
+  --crema-2: #F3E9D5;
+  --tarjeta: #FFFDF8;
+  --dorado: #D4A437;
+  --dorado-oscuro: #B5852A;
+  --oliva: #7A8450;
+  --oliva-oscuro: #5d6638;
+  --terracota: #C5603C;
+  --terracota-oscuro: #9c4a2d;
+  --caramelo: #A6743F;
+  --caramelo-oscuro: #82592f;
+  --texto: #3A2E20;       /* marrón cálido, alto contraste sobre crema */
+  --texto-suave: #7a6a55;
+  --borde: #E7DAC2;
+  --blanco: #ffffff;
+  --error: #b3261e;
+  --ok: #4f7a3f;
+
+  /* Colores por categoría */
+  --cat-helados: var(--terracota);
+  --cat-pan: var(--dorado-oscuro);
+  --cat-bebidas: var(--oliva);
+  --cat-comidas: var(--caramelo);
+
+  /* Tipografía: stack del sistema, sin fuentes finas, funciona offline */
+  --fuente: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Tamaños generosos para lectura en cocina */
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --sombra: 0 6px 18px rgba(58, 46, 32, 0.12);
+  --sombra-fuerte: 0 10px 28px rgba(58, 46, 32, 0.22);
+
+  /* Áreas táctiles seguras (notch) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--fuente);
+  color: var(--texto);
+  background: var(--crema);
+  font-size: 18px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.01em; }
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.4rem; }
+button { font-family: inherit; }
+img { display: block; max-width: 100%; }
+
+/* Evita selección accidental con dedos */
+.no-sel { user-select: none; -webkit-user-select: none; }
