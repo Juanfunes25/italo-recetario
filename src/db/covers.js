@@ -181,6 +181,68 @@ export const COVER_PAN = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0
   <g stroke="#9c6a2e" stroke-width="2.5" opacity=".55" stroke-linecap="round"><path d="M126 86 l6 -10"/><path d="M152 82 l4 -10"/><path d="M180 84 l6 -10"/><path d="M206 90 l6 -8"/></g>
 </svg>`)
 
+// ---------- REPOSTERÍA / PAN ----------
+const BG_PAN = `<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C4"/><stop offset="1" stop-color="#E3BE6E"/></linearGradient>`
+
+// Torta — pastel redondo con relleno y cereza
+export const COVER_TORTA = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <ellipse cx="160" cy="170" rx="92" ry="14" fill="#FBF6EC" stroke="#caa15c" stroke-width="3"/>
+  <path d="M96 96 H224 V150 Q224 164 160 164 Q96 164 96 150 Z" fill="#E5BE7B" stroke="#b07d2e" stroke-width="3"/>
+  <rect x="98" y="112" width="124" height="11" fill="#FBF3E2"/>
+  <rect x="98" y="138" width="124" height="11" fill="#FBF3E2"/>
+  <path d="M96 96 Q160 74 224 96 Q224 110 160 116 Q96 110 96 96 Z" fill="#FBF3E2" stroke="#caa15c" stroke-width="2"/>
+  <path d="M112 104 v10 M140 107 v10 M180 107 v10 M208 104 v10" stroke="#FBF3E2" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="160" cy="84" r="9" fill="#C0392B"/>
+</svg>`)
+
+// Brownie — cuadros oscuros apilados
+export const COVER_BROWNIE = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <ellipse cx="160" cy="158" rx="100" ry="16" fill="#6b441f" opacity=".2"/>
+  <rect x="108" y="98" width="104" height="56" rx="6" fill="#4a2c17" stroke="#2e1a0d" stroke-width="3"/>
+  <rect x="124" y="78" width="80" height="40" rx="6" fill="#5a3620" stroke="#2e1a0d" stroke-width="3"/>
+  <rect x="124" y="78" width="80" height="13" rx="6" fill="#6e4528" opacity=".7"/>
+  <g fill="#3a2414"><circle cx="150" cy="100" r="3"/><circle cx="178" cy="104" r="3"/><circle cx="164" cy="92" r="2.5"/></g>
+</svg>`)
+
+// Muffin / cupcake — base con pirotín y copete
+export const COVER_MUFFIN = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <path d="M118 120 H202 L192 168 H128 Z" fill="#E9C079" stroke="#b07d2e" stroke-width="3"/>
+  <g stroke="#b07d2e" stroke-width="2.5" opacity=".5"><path d="M134 124 l-3 40 M160 124 v44 M186 124 l3 40"/></g>
+  <path d="M112 122 Q116 80 160 78 Q204 80 208 122 Q160 134 112 122 Z" fill="#C68A4A" stroke="#9c6a2e" stroke-width="3"/>
+  <g fill="#7a4a22"><circle cx="140" cy="104" r="3.5"/><circle cx="178" cy="100" r="3.5"/><circle cx="160" cy="114" r="3.5"/></g>
+  <circle cx="160" cy="72" r="7" fill="#C0392B"/>
+</svg>`)
+
+// Crema — copete batido en bowl
+export const COVER_CREMA = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <path d="M112 120 Q160 150 208 120 L200 150 Q160 168 120 150 Z" fill="#FBF6EC" stroke="#caa15c" stroke-width="3"/>
+  <path d="M118 120 Q128 96 142 110 Q150 86 162 104 Q174 84 184 106 Q198 94 202 120 Q160 134 118 120 Z" fill="#FCF7EA" stroke="#e0cda4" stroke-width="2.5"/>
+  <path d="M160 100 q4 -18 16 -22" fill="none" stroke="#FCF7EA" stroke-width="8" stroke-linecap="round"/>
+</svg>`)
+
+// Pie de limón — rebanada con relleno amarillo y merengue
+export const COVER_PIE = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <path d="M70 150 L240 150 L150 96 Z" fill="#E7B85C" stroke="#b07d2e" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M84 144 L226 144 L150 110 Z" fill="#F4D873"/>
+  <path d="M150 96 Q170 86 190 100 Q172 104 196 116 Q176 118 150 112 Z" fill="#FBF6EC" stroke="#e0cda4" stroke-width="2"/>
+  <rect x="66" y="150" width="178" height="12" rx="5" fill="#C68A4A" stroke="#9c6a2e" stroke-width="2"/>
+</svg>`)
+
+// Masa frolla — base de tartaleta vacía
+export const COVER_MASA = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <ellipse cx="160" cy="150" rx="104" ry="22" fill="#C68A4A" stroke="#9c6a2e" stroke-width="3"/>
+  <ellipse cx="160" cy="120" rx="100" ry="24" fill="#E5BE7B" stroke="#b07d2e" stroke-width="3"/>
+  <ellipse cx="160" cy="120" rx="78" ry="16" fill="#D9A85B"/>
+  <g stroke="#b07d2e" stroke-width="3" opacity=".6"><path d="M70 124 v18 M92 132 v18 M118 136 v18 M150 138 v18 M182 136 v18 M210 132 v18 M236 124 v18"/></g>
+</svg>`)
+
+// Merengue suizo — copete blanco con picos
+export const COVER_MERENGUE = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>${BG_PAN}</defs>${rect}
+  <ellipse cx="160" cy="160" rx="80" ry="14" fill="#FBF6EC" stroke="#caa15c" stroke-width="3"/>
+  <path d="M104 150 Q104 110 122 110 Q126 88 142 104 Q150 78 162 100 Q174 76 186 102 Q196 90 204 112 Q220 112 216 150 Q160 166 104 150 Z" fill="#FFFDF8" stroke="#e6d3b0" stroke-width="2.5"/>
+  <path d="M160 98 q2 -16 12 -22" fill="none" stroke="#FFFDF8" stroke-width="7" stroke-linecap="round"/>
+</svg>`)
+
 // Focaccia (Pan) — pan rústico con romero (se mantiene)
 export const COVER_FOCACCIA = svg(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200"><defs>
     <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E7C4"/><stop offset="1" stop-color="#E3BE6E"/></linearGradient>

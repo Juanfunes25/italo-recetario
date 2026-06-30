@@ -16,33 +16,8 @@ import {
   COVER_ICE_LATTE, COVER_CHAI_HELADO, COVER_AFFOGATO, COVER_MALTEADA,
   COVER_ARANCINO, COVER_BANANA_SPLIT, COVER_CREPA, COVER_PAN,
 } from './covers'
-
-const now = Date.now()
-
-// Constructor: rellena ids estables y campos por defecto.
-function receta(id, data) {
-  return {
-    cover: null,
-    minutos: 5,
-    rendimiento: 1,
-    unidadRendimiento: 'unidad',
-    notas: '',
-    usos: 0,
-    creado: now,
-    actualizado: now,
-    ...data,
-    id,
-    ingredientes: (data.ingredientes || []).map((x, i) => ({ id: `${id}-i${i}`, ...x })),
-    pasos: (data.pasos || []).map((p, i) => ({
-      id: `${id}-p${i}`,
-      texto: typeof p === 'string' ? p : p.texto,
-      img: (typeof p === 'object' && p.img) || null,
-    })),
-  }
-}
-const ing = (nombre, cantidad, unidad) => ({ nombre, cantidad, unidad })
-// Ingrediente sin cantidad fija (se muestra "al gusto").
-const ingAg = (nombre) => ({ nombre, cantidad: undefined, unidad: 'al gusto' })
+import { receta, ing, ingAg } from './seed-helpers'
+import { RECETAS_PAN } from './seed-pan'
 
 const _BASE = [
   // ============ PAN ============
@@ -355,6 +330,9 @@ const _BASE = [
     ],
     notas: 'Procedimiento de servicio para el pan ya horneado (no es la receta de horneado).',
   }),
+
+  // ============ REPOSTERÍA / PAN (del Excel Italo_Recetas_MEC3) ============
+  ...RECETAS_PAN,
 ]
 
 // Portada ilustrada por defecto según el tipo de receta.
