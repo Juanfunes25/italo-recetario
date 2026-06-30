@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import ConfirmModal from '../components/ConfirmModal'
 import { useRecipes } from '../context/RecipesContext'
 import { useAdmin } from '../context/AdminContext'
-import { categoriaInfo, formatQty, formatTime } from '../utils/format'
+import { categoriaInfo, formatQty } from '../utils/format'
 
 export default function RecipeView() {
   const { id } = useParams()
@@ -69,7 +69,6 @@ export default function RecipeView() {
       <div className="container">
         <h1 style={{ marginTop: 14 }}>{receta.nombre}</h1>
         <div className="meta" style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-          <span className="chip">⏱ {formatTime(receta.minutos)}</span>
           <span className="chip">
             🥄 Rinde {formatQty(receta.rendimiento)} {receta.unidadRendimiento}
           </span>

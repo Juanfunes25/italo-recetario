@@ -156,12 +156,7 @@ export default function RecipeEdit() {
           <ImagePicker valor={r.cover} onChange={(v) => set('cover', v)} etiqueta="Tomar o elegir foto de portada" />
         </div>
 
-        {/* Tiempo + rendimiento */}
-        <div className="field">
-          <label>Tiempo de preparación (minutos)</label>
-          <input className="input" type="number" inputMode="numeric" min="0" value={r.minutos} onChange={(e) => set('minutos', e.target.value)} />
-        </div>
-
+        {/* Rendimiento */}
         <div className="field">
           <label>Rendimiento de la receta base</label>
           <div className="row">

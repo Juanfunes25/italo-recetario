@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import { categoriaInfo, formatTime } from '../utils/format'
+import { categoriaInfo } from '../utils/format'
 
-// Tarjeta de receta: foto de portada, nombre y tiempo de preparación.
+// Tarjeta de receta: foto de portada y nombre.
 export default function RecipeCard({ receta }) {
   const navigate = useNavigate()
   const cat = categoriaInfo(receta.categoria)
@@ -18,7 +18,6 @@ export default function RecipeCard({ receta }) {
       <div className="body">
         <div className="title">{receta.nombre}</div>
         <div className="meta">
-          <span className="chip">⏱ {formatTime(receta.minutos)}</span>
           <span className="chip">{cat.emoji} {cat.nombre}</span>
         </div>
       </div>
