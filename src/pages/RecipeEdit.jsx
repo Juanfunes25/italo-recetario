@@ -172,7 +172,7 @@ export default function RecipeEdit() {
               placeholder="Cantidad"
             />
             <select className="select" value={r.unidadRendimiento} onChange={(e) => set('unidadRendimiento', e.target.value)}>
-              {['kg', 'g', 'L', 'ml', 'unidad', 'porciones'].map((u) => (
+              {['kg', 'g', 'L', 'ml', 'unidad', 'porciones', 'tanda'].map((u) => (
                 <option key={u} value={u}>{u}</option>
               ))}
             </select>

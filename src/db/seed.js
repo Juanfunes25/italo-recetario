@@ -9,7 +9,7 @@
 //  - agregar nuevas en futuras versiones sin duplicar,
 //  - restaurarlas si se borran por accidente.
 // ===========================================================
-import { COVER_GELATO, COVER_FOCACCIA, COVER_CAFE, COVER_FRAPPE, COVER_COMIDA } from './covers'
+import { COVER_FOCACCIA, COVER_CAFE, COVER_FRAPPE, COVER_COMIDA } from './covers'
 
 const now = Date.now()
 
@@ -35,35 +35,10 @@ function receta(id, data) {
   }
 }
 const ing = (nombre, cantidad, unidad) => ({ nombre, cantidad, unidad })
+// Ingrediente sin cantidad fija (se muestra "al gusto").
+const ingAg = (nombre) => ({ nombre, cantidad: undefined, unidad: 'al gusto' })
 
 const _BASE = [
-  // ============ HELADOS (ejemplo — los demás los agrega Juan) ============
-  receta('base_gelato_vainilla', {
-    nombre: 'Gelato de Vainilla',
-    categoria: 'helados',
-    cover: COVER_GELATO,
-    minutos: 40,
-    rendimiento: 5,
-    unidadRendimiento: 'kg',
-    ingredientes: [
-      ing('Leche entera', 3, 'L'),
-      ing('Crema de leche', 1, 'L'),
-      ing('Azúcar', 0.9, 'kg'),
-      ing('Yemas de huevo', 12, 'unidad'),
-      ing('Vaina de vainilla', 2, 'unidad'),
-      ing('Leche en polvo', 120, 'g'),
-    ],
-    pasos: [
-      'Calentar la leche y la crema con la vainilla abierta hasta que empiece a humear (no hervir).',
-      'Batir las yemas con el azúcar y la leche en polvo hasta que aclaren.',
-      'Verter poco a poco la leche caliente sobre las yemas, revolviendo siempre para que no se cocinen.',
-      'Regresar todo a la olla y cocinar a fuego bajo hasta 82°C (napa la cuchara).',
-      'Enfriar rápido en baño de hielo y madurar la mezcla en frío 4 horas.',
-      'Mantecar en la máquina hasta textura cremosa y llevar a congelador.',
-    ],
-    notas: 'Si queda muy duro al servir, sacar 5 min antes. Para más cremosidad, agregar 20 g de dextrosa al azúcar.',
-  }),
-
   // ============ PAN ============
   receta('base_focaccia', {
     nombre: 'Focaccia Artesanal',
@@ -290,16 +265,34 @@ const _BASE = [
   receta('base_arancino', {
     nombre: 'Arancino',
     categoria: 'comidas',
-    minutos: 10,
+    minutos: 60,
+    rendimiento: 1,
+    unidadRendimiento: 'tanda',
     ingredientes: [
-      ing('Arancino', 1, 'unidad'),
-      ing('Salsa para acompañar', 1, 'unidad'),
+      ing('Agua', 2000, 'ml'),
+      ing('Arroz risotto', 1000, 'g'),
+      ing('Consomé de pollo (Maggi)', 2, 'cda'),
+      ing('Consomé sazón', 1, 'cda'),
+      ing('Consomé colorante', 0.5, 'cda'),
+      ing('Mantequilla amarilla (¼ de barra por olla)', 0.25, 'unidad'),
+      ingAg('Aceite de bacon (para la olla)'),
+      ingAg('Queso parmesano Bel Gioioso (para unir el arroz)'),
+      ingAg('Quesillo / mozzarella El Artesano (relleno)'),
+      ingAg('Prosciutto Carando (relleno)'),
+      ingAg('Empanizador 4C bread crumbs'),
     ],
     pasos: [
-      'Sacar el arancino de la refrigeradora.',
-      'Colocarlo en el airfryer a 160°C durante 7 minutos.',
-      'Servir caliente, partido por la mitad, junto con su salsa en la tabla de madera.',
+      'En una olla, poner el aceite del bacon y la mantequilla amarilla.',
+      'Agregar el arroz risotto (1000 g) y sofreír un poco.',
+      'Añadir los 2000 ml de agua con los consomés: 2 cda de pollo, 1 cda de sazón y ½ cda de colorante.',
+      'Cocinar el risotto removiendo hasta que el arroz esté en su punto y absorba el líquido.',
+      'Fuera del fuego, incorporar el queso parmesano para unir el arroz. Dejar enfriar.',
+      'Formar bolas y rellenarlas al centro con mozzarella (quesillo) y prosciutto.',
+      'Empanizar las bolas con el empanizador 4C bread crumbs.',
+      'Freír (o airfryer) hasta dorar.',
+      'Para servir desde refrigeración: airfryer a 160°C por 7 min. Servir partido por la mitad con su salsa en la tabla de madera.',
     ],
+    notas: 'Receta de producción de Italo. El parmesano sirve para unir el arroz; el relleno es mozzarella y prosciutto.',
   }),
   receta('base_banana_split', {
     nombre: 'Banana Split',
@@ -321,26 +314,28 @@ const _BASE = [
   receta('base_crepa', {
     nombre: 'Crepa',
     categoria: 'comidas',
-    minutos: 20,
-    rendimiento: 4,
-    unidadRendimiento: 'unidad',
+    minutos: 30,
+    rendimiento: 1,
+    unidadRendimiento: 'tanda',
     ingredientes: [
-      ing('Harina', 100, 'g'),
-      ing('Huevo', 2, 'unidad'),
-      ing('Leche', 250, 'ml'),
-      ing('Mantequilla derretida', 20, 'g'),
-      ing('Azúcar', 1, 'cda'),
-      ing('Sal', 1, 'pizca'),
-      ing('Relleno (al gusto)', 1, 'unidad'),
+      ing('Harina', 600, 'g'),
+      ing('Huevos', 250, 'g'),
+      ing('Azúcar', 45, 'g'),
+      ing('Leche', 1225, 'ml'),
+      ing('Vainilla líquida', 30, 'ml'),
+      ing('Mantequilla amarilla', 115, 'g'),
+      ingAg('Relleno (Nutella, fruta, gelato…)'),
     ],
     pasos: [
-      'Mezclar la harina, los huevos, la leche, el azúcar y la sal hasta una masa líquida sin grumos.',
-      'Agregar la mantequilla derretida y dejar reposar la masa 15 min.',
-      'Engrasar un sartén o plancha caliente y verter una capa fina de masa.',
+      'Batir los huevos con el azúcar y la vainilla líquida.',
+      'Agregar la harina alternando con la leche, batiendo hasta una masa líquida sin grumos.',
+      'Derretir la mantequilla amarilla, incorporarla a la masa y mezclar bien.',
+      'Dejar reposar la masa 15–30 min.',
+      'En una plancha o sartén caliente y engrasada, verter una capa fina de masa.',
       'Cocinar ≈1 min por lado hasta dorar.',
-      'Rellenar al gusto (Nutella, fruta, gelato) y doblar.',
+      'Rellenar al gusto y doblar.',
     ],
-    notas: '⚠️ Receta base sugerida — esta no venía en el manual. Ajusta cantidades y relleno a la preparación real de Italo.',
+    notas: 'Fórmula de producción de Italo. Una tanda rinde varias crepas.',
   }),
   receta('base_pan_servicio', {
     nombre: 'Pan caliente (servicio)',

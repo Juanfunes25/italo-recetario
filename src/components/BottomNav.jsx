@@ -13,10 +13,6 @@ export default function BottomNav({ onAdminClick }) {
         <span className="ico">🏠</span>
         <span>Inicio</span>
       </NavLink>
-      <NavLink to="/categoria/helados" className={item}>
-        <span className="ico">🍦</span>
-        <span>Helados</span>
-      </NavLink>
       <NavLink to="/categoria/pan" className={item}>
         <span className="ico">🍞</span>
         <span>Pan</span>

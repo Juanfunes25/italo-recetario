@@ -10,7 +10,6 @@ export function uid(prefix = 'r') {
 }
 
 export const CATEGORIAS = [
-  { id: 'helados', nombre: 'Helados', emoji: '🍦', color: 'helados' },
   { id: 'pan', nombre: 'Pan', emoji: '🍞', color: 'pan' },
   { id: 'bebidas', nombre: 'Bebidas', emoji: '🥤', color: 'bebidas' },
   { id: 'comidas', nombre: 'Comidas', emoji: '🍽️', color: 'comidas' },

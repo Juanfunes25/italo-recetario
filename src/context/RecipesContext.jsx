@@ -42,6 +42,26 @@ async function migrarCovers() {
   await setSetting('covers_v1', true)
 }
 
+// Actualización de contenido v2: elimina la categoría Helados (ya no se usa)
+// y refresca las recetas de Crepa y Arancino con sus fórmulas reales.
+async function migrarContenidoV2() {
+  const hecho = await getSetting('contenido_v2', false)
+  if (hecho) return
+  const todas = await getAllRecipes()
+  // Borrar recetas de la categoría Helados (categoría eliminada)
+  for (const r of todas) {
+    if (r.categoria === 'helados') await deleteRecipe(r.id)
+  }
+  // Refrescar Crepa y Arancino al contenido nuevo del recetario base (si existen)
+  const existentesIds = new Set((await getAllRecipes()).map((r) => r.id))
+  for (const id of ['base_crepa', 'base_arancino']) {
+    if (!existentesIds.has(id)) continue
+    const nueva = RECETAS_BASE.find((r) => r.id === id)
+    if (nueva) await saveRecipe({ ...nueva })
+  }
+  await setSetting('contenido_v2', true)
+}
+
 // Agrega las recetas base que aún no se han importado nunca.
 // Respeta las que el usuario borró (no las vuelve a meter).
 async function importarBase() {
@@ -68,6 +88,7 @@ export function RecipesProvider({ children }) {
         await migrarDemosViejos()
         await importarBase()
         await migrarCovers()
+        await migrarContenidoV2()
         const datos = await getAllRecipes()
         if (activo) setRecetas(datos)
       } finally {
