@@ -9,7 +9,13 @@
 //  - agregar nuevas en futuras versiones sin duplicar,
 //  - restaurarlas si se borran por accidente.
 // ===========================================================
-import { COVER_FOCACCIA, COVER_CAFE, COVER_FRAPPE, COVER_COMIDA } from './covers'
+import {
+  COVER_FOCACCIA,
+  COVER_ESPRESSO, COVER_AMERICANO, COVER_CAPPUCCINO, COVER_LATTE, COVER_CHAI,
+  COVER_MACCHIATO, COVER_MOCHA, COVER_CHOCOLATE,
+  COVER_ICE_LATTE, COVER_CHAI_HELADO, COVER_AFFOGATO, COVER_MALTEADA,
+  COVER_ARANCINO, COVER_BANANA_SPLIT, COVER_CREPA, COVER_PAN,
+} from './covers'
 
 const now = Date.now()
 
@@ -354,22 +360,22 @@ const _BASE = [
 // Portada ilustrada por defecto según el tipo de receta.
 // (Si la receta ya trae cover propio —gelato, focaccia— se respeta.)
 const COVERS = {
-  base_espresso: COVER_CAFE,
-  base_americano: COVER_CAFE,
-  base_cappuccino: COVER_CAFE,
-  base_latte: COVER_CAFE,
-  base_chai_caliente: COVER_CAFE,
-  base_macchiato: COVER_CAFE,
-  base_mocha: COVER_CAFE,
-  base_chocolate_caliente: COVER_CAFE,
-  base_ice_latte: COVER_FRAPPE,
-  base_chai_helado: COVER_FRAPPE,
-  base_affogato: COVER_FRAPPE,
-  base_malteada: COVER_FRAPPE,
-  base_arancino: COVER_COMIDA,
-  base_banana_split: COVER_COMIDA,
-  base_crepa: COVER_COMIDA,
-  base_pan_servicio: COVER_COMIDA,
+  base_espresso: COVER_ESPRESSO,
+  base_americano: COVER_AMERICANO,
+  base_cappuccino: COVER_CAPPUCCINO,
+  base_latte: COVER_LATTE,
+  base_chai_caliente: COVER_CHAI,
+  base_macchiato: COVER_MACCHIATO,
+  base_mocha: COVER_MOCHA,
+  base_chocolate_caliente: COVER_CHOCOLATE,
+  base_ice_latte: COVER_ICE_LATTE,
+  base_chai_helado: COVER_CHAI_HELADO,
+  base_affogato: COVER_AFFOGATO,
+  base_malteada: COVER_MALTEADA,
+  base_arancino: COVER_ARANCINO,
+  base_banana_split: COVER_BANANA_SPLIT,
+  base_crepa: COVER_CREPA,
+  base_pan_servicio: COVER_PAN,
 }
 
 export const RECETAS_BASE = _BASE.map((r) =>

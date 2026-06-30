@@ -42,6 +42,25 @@ async function migrarCovers() {
   await setSetting('covers_v1', true)
 }
 
+// Portadas v2: cada producto tiene su ilustración propia (antes compartían
+// una genérica por categoría). Solo reemplaza ilustraciones SVG, NUNCA una
+// foto real (JPEG) que el usuario haya subido.
+async function migrarCoversV2() {
+  const hecho = await getSetting('covers_v2', false)
+  if (hecho) return
+  const baseCover = new Map(RECETAS_BASE.filter((r) => r.cover).map((r) => [r.id, r.cover]))
+  const todas = await getAllRecipes()
+  for (const r of todas) {
+    const nueva = baseCover.get(r.id)
+    // Actualizar solo si sigue siendo una ilustración (no una foto del usuario)
+    const esIlustracion = !r.cover || String(r.cover).startsWith('data:image/svg+xml')
+    if (nueva && esIlustracion && r.cover !== nueva) {
+      await saveRecipe({ ...r, cover: nueva })
+    }
+  }
+  await setSetting('covers_v2', true)
+}
+
 // Actualización de contenido v2: elimina la categoría Helados (ya no se usa)
 // y refresca las recetas de Crepa y Arancino con sus fórmulas reales.
 async function migrarContenidoV2() {
@@ -89,6 +108,7 @@ export function RecipesProvider({ children }) {
         await importarBase()
         await migrarCovers()
         await migrarContenidoV2()
+        await migrarCoversV2()
         const datos = await getAllRecipes()
         if (activo) setRecetas(datos)
       } finally {
