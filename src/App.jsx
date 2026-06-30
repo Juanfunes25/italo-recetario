@@ -5,6 +5,7 @@ import CategoryList from './pages/CategoryList'
 import RecipeView from './pages/RecipeView'
 import RecipeEdit from './pages/RecipeEdit'
 import CookMode from './pages/CookMode'
+import Guia from './pages/Guia'
 import Settings from './pages/Settings'
 import BottomNav from './components/BottomNav'
 import PinModal from './components/PinModal'
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/categoria/:catId" element={<CategoryList />} />
         <Route path="/receta/:id" element={<RecipeView />} />
         <Route path="/cocina/:id" element={<CookMode />} />
+        <Route path="/guia" element={<Guia />} />
         <Route path="/nueva" element={<SoloAdmin><RecipeEdit /></SoloAdmin>} />
         <Route path="/editar/:id" element={<SoloAdmin><RecipeEdit /></SoloAdmin>} />
         <Route path="/ajustes" element={<SoloAdmin><Settings /></SoloAdmin>} />

@@ -161,12 +161,15 @@
    =========================================================== */
 .recipe-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr); /* teléfono: 2 por fila */
   gap: 14px;
   margin-top: 14px;
 }
-@media (min-width: 600px) {
-  .recipe-grid { grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 560px) {
+  .recipe-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 720px) {
+  .recipe-grid { grid-template-columns: repeat(4, 1fr); } /* tablet: 4 por fila */
 }
 .recipe-card {
   background: var(--tarjeta);

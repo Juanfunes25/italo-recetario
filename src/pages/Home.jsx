@@ -43,23 +43,33 @@ export default function Home() {
           )}
         </div>
       ) : (
-        <div className="cat-grid">
-          {CATEGORIAS.map((c) => (
-            <button
-              key={c.id}
-              className={`cat-card ${c.color} no-sel`}
-              onClick={() => navigate(`/categoria/${c.id}`)}
-            >
-              <span className="emoji" aria-hidden>{c.emoji}</span>
-              <div>
-                <div className="label">{c.nombre}</div>
-                <div className="count">
-                  {cargando ? '…' : `${conteo(c.id)} receta${conteo(c.id) === 1 ? '' : 's'}`}
+        <>
+          <div className="cat-grid">
+            {CATEGORIAS.map((c) => (
+              <button
+                key={c.id}
+                className={`cat-card ${c.color} no-sel`}
+                onClick={() => navigate(`/categoria/${c.id}`)}
+              >
+                <span className="emoji" aria-hidden>{c.emoji}</span>
+                <div>
+                  <div className="label">{c.nombre}</div>
+                  <div className="count">
+                    {cargando ? '…' : `${conteo(c.id)} receta${conteo(c.id) === 1 ? '' : 's'}`}
+                  </div>
                 </div>
-              </div>
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+
+          <button
+            className="btn btn--gold btn--full btn--lg no-sel"
+            style={{ marginTop: 16 }}
+            onClick={() => navigate('/guia')}
+          >
+            📖 Guía de servicio y normas
+          </button>
+        </>
       )}
     </div>
   )
