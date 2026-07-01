@@ -69,28 +69,24 @@ export default function RecipeView() {
         )}
       </div>
 
-      {receta.cover ? (
-        <img className="hero" src={receta.cover} alt={receta.nombre} />
-      ) : (
-        <div className={`hero placeholder ph-${receta.categoria}`} aria-hidden>{cat.emoji}</div>
-      )}
-
-      <div className="container">
-        <h1 style={{ marginTop: 14 }}>{receta.nombre}</h1>
-        <div className="meta" style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+      <div className="container" style={{ paddingTop: 4 }}>
+        <h1>{receta.nombre}</h1>
+        <div
+          className="meta"
+          style={{ display: 'flex', gap: 8, marginTop: 10, alignItems: 'center', flexWrap: 'wrap' }}
+        >
           <span className="chip">
             🥄 Rinde {formatQty(receta.rendimiento)} {receta.unidadRendimiento}
           </span>
+          {/* Modo cocina — botón pequeño y discreto */}
+          <button
+            className="btn btn--ghost"
+            style={{ minHeight: 44, padding: '8px 16px', fontSize: '.95rem' }}
+            onClick={() => navigate(`/cocina/${receta.id}`)}
+          >
+            👨‍🍳 Modo cocina
+          </button>
         </div>
-
-        {/* Modo cocina */}
-        <button
-          className="btn btn--full btn--lg"
-          style={{ marginTop: 18 }}
-          onClick={() => navigate(`/cocina/${receta.id}`)}
-        >
-          👨‍🍳 Modo cocina (pasos grandes)
-        </button>
 
         {/* Escalado */}
         <div className="section">

@@ -560,18 +560,18 @@
    =========================================================== */
 .mult-row {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 .mult {
   flex: 1 1 auto;
-  min-width: 60px;
-  min-height: 54px;
+  min-width: 52px;
+  min-height: 44px;
   border-radius: 999px;
   border: 2px solid var(--borde);
   background: var(--tarjeta);
   color: var(--texto);
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 800;
   cursor: pointer;
   transition: transform .08s ease;
@@ -583,8 +583,13 @@
   color: #fff;
   box-shadow: var(--sombra);
 }
-/* Cantidades más grandes y en negrita para leer de un vistazo */
-.ingredients .qty { font-size: 1.2rem; }
+/* Escalador más compacto (menos ruido visual) */
+.scaler { padding: 10px 14px; }
+.scaler .label { font-size: .95rem; }
+.scaler .stepper button { width: 44px; height: 44px; font-size: 1.4rem; }
+.scaler .stepper .value { min-width: 78px; font-size: 1.15rem; }
+/* Cantidades en negrita para leer de un vistazo */
+.ingredients .qty { font-size: 1.15rem; }
 
 /* ===========================================================
    Modo cocina — variante oscura

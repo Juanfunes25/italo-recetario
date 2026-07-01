@@ -42,15 +42,12 @@ export default function Guia() {
           duda, revísala aquí antes de servir.
         </p>
 
-        <Seccion icono="✅" titulo="Normas generales">
-          <ul className="ingredients">
-            <li><span className="name">Lávate las manos antes de manipular ingredientes.</span></li>
-            <li><span className="name">Usa utensilios y equipos limpios.</span></li>
-            <li><span className="name">Sigue las recetas con precisión (mismas cantidades siempre).</span></li>
-            <li><span className="name">Mantén el área de trabajo ordenada.</span></li>
-            <li><span className="name">Usa siempre productos frescos y en buen estado.</span></li>
-          </ul>
-        </Seccion>
+        <div className="notes" style={{ marginBottom: 18 }}>
+          <div className="lbl">🧤 Regla principal</div>
+          <p style={{ margin: '8px 0 0', fontSize: '1.15rem', fontWeight: 700 }}>
+            Utilizar ambos guantes para servir.
+          </p>
+        </div>
 
         <Seccion icono="🍨" titulo="Porciones de gelato">
           <p style={{ color: 'var(--texto-suave)', marginTop: 0 }}>
