@@ -554,3 +554,109 @@
 }
 .install-banner .yes { background: var(--dorado); color: var(--texto); }
 .install-banner .no { background: transparent; color: var(--crema); opacity:.7; }
+
+/* ===========================================================
+   Escalador — multiplicadores rápidos (pastillas)
+   =========================================================== */
+.mult-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.mult {
+  flex: 1 1 auto;
+  min-width: 60px;
+  min-height: 54px;
+  border-radius: 999px;
+  border: 2px solid var(--borde);
+  background: var(--tarjeta);
+  color: var(--texto);
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .08s ease;
+}
+.mult:active { transform: scale(.95); }
+.mult.on {
+  background: var(--terracota);
+  border-color: var(--terracota);
+  color: #fff;
+  box-shadow: var(--sombra);
+}
+/* Cantidades más grandes y en negrita para leer de un vistazo */
+.ingredients .qty { font-size: 1.2rem; }
+
+/* ===========================================================
+   Modo cocina — variante oscura
+   =========================================================== */
+.cook--dark { background: #17120d; color: #F5ECDA; }
+.cook--dark .cook-head {
+  background: #211a12;
+  border-bottom-color: #3a2e20;
+}
+.cook--dark .cook-head .t { color: #F5ECDA; }
+.cook--dark .icon-btn.cook-x {
+  background: #2e2418;
+  color: #F5ECDA;
+  border-color: #4a3c2a;
+  box-shadow: none;
+}
+.cook--dark .cook-progress .seg { background: #3a2e20; }
+.cook--dark .cook-progress .seg.done { background: var(--oliva); }
+.cook--dark .cook-progress .seg.current { background: var(--terracota); }
+.cook--dark .cook-step-num {
+  color: #E8A87C; /* terracota más claro para contraste sobre oscuro */
+}
+.cook--dark .cook-step-text {
+  color: #F8F1E4;
+  font-size: 2.1rem; /* ~34px, mínimo 28px pedido */
+}
+.cook--dark .cook-foot {
+  background: #211a12;
+  border-top-color: #3a2e20;
+}
+.cook--dark .cook-foot .btn--ghost {
+  background: #2e2418;
+  color: #F5ECDA;
+  border-color: #4a3c2a;
+}
+.cook--dark .wakelock-note { color: #b9a988; }
+
+/* Overlay de ingredientes dentro del modo cocina */
+.cook-ing-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: #17120d;
+  padding: calc(18px + var(--safe-top)) 22px calc(20px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+}
+.cook-ing-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.cook-ing-head h2 { color: #F5ECDA; font-size: 1.6rem; }
+.cook-ing-rinde { color: #E8A87C; font-weight: 700; }
+.cook-ing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+.cook-ing-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 13px 2px;
+  border-bottom: 1px solid #3a2e20;
+  font-size: 1.3rem;
+  color: #F5ECDA;
+}
+.cook-ing-list li b { color: #E8A87C; min-width: 96px; font-size: 1.3rem; }
+.cook-ing-overlay .btn { min-height: 66px; font-size: 1.25rem; }

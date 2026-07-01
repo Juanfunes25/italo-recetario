@@ -1,18 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useRecipes } from '../context/RecipesContext'
 import { useWakeLock } from '../hooks/useWakeLock'
+import { formatQty } from '../utils/format'
 
-// Pantalla completa para producción: un paso a la vez, letra grande,
-// botones enormes, y la pantalla no se apaga (Wake Lock).
+// Modo cocina para producción: pantalla completa, fondo oscuro, un paso a la
+// vez con letra enorme, botones gigantes, swipe entre pasos y la pantalla no
+// se apaga (Wake Lock). Muestra los ingredientes al inicio.
 export default function CookMode() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { getById } = useRecipes()
   const receta = getById(id)
+
   const [i, setI] = useState(0)
+  const [verIngredientes, setVerIngredientes] = useState(true) // se muestra al inicio
+  const contRef = useRef(null)
+  const touchX = useRef(null)
 
   const soportaWakeLock = useWakeLock(true)
+
+  // Pantalla completa real (best-effort; si el navegador no deja, se ignora)
+  useEffect(() => {
+    const el = contRef.current
+    if (el && el.requestFullscreen) {
+      el.requestFullscreen().catch(() => {})
+    }
+    return () => {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {})
+      }
+    }
+  }, [])
 
   if (!receta) {
     return (
@@ -30,20 +49,39 @@ export default function CookMode() {
   const total = pasos.length
   const paso = pasos[i]
   const esUltimo = i === total - 1
+  const ir = (d) => setI((v) => Math.min(total - 1, Math.max(0, v + d)))
+
+  // Swipe horizontal entre pasos
+  const onTouchStart = (e) => { touchX.current = e.touches[0].clientX }
+  const onTouchEnd = (e) => {
+    if (touchX.current == null || verIngredientes) return
+    const dx = e.changedTouches[0].clientX - touchX.current
+    if (Math.abs(dx) > 55) ir(dx < 0 ? 1 : -1)
+    touchX.current = null
+  }
 
   return (
-    <div className="cook">
+    <div
+      className="cook cook--dark"
+      ref={contRef}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <div className="cook-head">
-        <button className="icon-btn" onClick={() => navigate(-1)} aria-label="Salir">✕</button>
+        <button className="icon-btn cook-x" onClick={() => navigate(-1)} aria-label="Salir">✕</button>
         <div className="t">{receta.nombre}</div>
+        <button
+          className="icon-btn cook-x"
+          onClick={() => setVerIngredientes(true)}
+          aria-label="Ver ingredientes"
+        >
+          🧺
+        </button>
       </div>
 
       <div className="cook-progress">
         {pasos.map((p, idx) => (
-          <span
-            key={p.id}
-            className={`seg ${idx < i ? 'done' : ''} ${idx === i ? 'current' : ''}`}
-          />
+          <span key={p.id} className={`seg ${idx < i ? 'done' : ''} ${idx === i ? 'current' : ''}`} />
         ))}
       </div>
 
@@ -58,23 +96,39 @@ export default function CookMode() {
       )}
 
       <div className="cook-foot">
-        <button
-          className="btn btn--ghost"
-          onClick={() => setI((v) => Math.max(0, v - 1))}
-          disabled={i === 0}
-        >
+        <button className="btn btn--ghost" onClick={() => ir(-1)} disabled={i === 0}>
           ← Anterior
         </button>
         {esUltimo ? (
-          <button className="btn btn--olive" onClick={() => navigate(-1)}>
-            ✓ Terminar
-          </button>
+          <button className="btn btn--olive" onClick={() => navigate(-1)}>✓ Terminar</button>
         ) : (
-          <button className="btn" onClick={() => setI((v) => Math.min(total - 1, v + 1))}>
-            Siguiente →
-          </button>
+          <button className="btn" onClick={() => ir(1)}>Siguiente →</button>
         )}
       </div>
+
+      {/* Resumen de ingredientes (se muestra al inicio y con el botón 🧺) */}
+      {verIngredientes && (
+        <div className="cook-ing-overlay">
+          <div className="cook-ing-head">
+            <button className="icon-btn cook-x" onClick={() => navigate(-1)} aria-label="Salir">✕</button>
+            <h2 style={{ flex: 1 }}>🧺 Ingredientes</h2>
+            <span className="cook-ing-rinde">
+              Rinde {formatQty(receta.rendimiento)} {receta.unidadRendimiento}
+            </span>
+          </div>
+          <ul className="cook-ing-list">
+            {receta.ingredientes.map((ing) => (
+              <li key={ing.id}>
+                <b>{formatQty(ing.cantidad)} {ing.unidad}</b>
+                <span>{ing.nombre}</span>
+              </li>
+            ))}
+          </ul>
+          <button className="btn btn--lg" onClick={() => setVerIngredientes(false)}>
+            {i === 0 ? 'Empezar ▶' : 'Volver a los pasos ▶'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

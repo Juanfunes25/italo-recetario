@@ -4,7 +4,7 @@ import RecipeCard from '../components/RecipeCard'
 import SearchBar from '../components/SearchBar'
 import { useRecipes } from '../context/RecipesContext'
 import { useAdmin } from '../context/AdminContext'
-import { categoriaInfo, normalize } from '../utils/format'
+import { categoriaInfo, coincide } from '../utils/format'
 
 export default function CategoryList() {
   const { catId } = useParams()
@@ -16,9 +16,8 @@ export default function CategoryList() {
   const cat = categoriaInfo(catId)
 
   const lista = useMemo(() => {
-    const q = normalize(busqueda)
     let r = recetas.filter((x) => x.categoria === catId)
-    if (q) r = r.filter((x) => normalize(x.nombre).includes(q))
+    if (busqueda.trim()) r = r.filter((x) => coincide(x, busqueda))
     if (orden === 'usadas') {
       r = [...r].sort((a, b) => (b.usos || 0) - (a.usos || 0) || a.nombre.localeCompare(b.nombre))
     } else {

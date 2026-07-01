@@ -4,6 +4,9 @@ import ConfirmModal from '../components/ConfirmModal'
 import { useRecipes } from '../context/RecipesContext'
 import { useAdmin } from '../context/AdminContext'
 import { categoriaInfo, formatQty } from '../utils/format'
+import { registrarReciente } from '../utils/recientes'
+
+const MULTIPLICADORES = [0.5, 1, 2, 3, 5]
 
 export default function RecipeView() {
   const { id } = useParams()
@@ -16,9 +19,12 @@ export default function RecipeView() {
   const [objetivo, setObjetivo] = useState(receta?.rendimiento || 1)
   const [confirmarBorrar, setConfirmarBorrar] = useState(false)
 
-  // Cuenta el uso una sola vez al abrir
+  // Cuenta el uso y la marca como "reciente" al abrir
   useEffect(() => {
-    if (receta) registrarUso(receta.id)
+    if (receta) {
+      registrarUso(receta.id)
+      registrarReciente(receta.id)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
@@ -49,6 +55,9 @@ export default function RecipeView() {
   const paso = receta.rendimiento >= 1 && Number.isInteger(receta.rendimiento) ? 1 : 0.5
   const bajar = () => setObjetivo((v) => Math.max(paso, Math.round((v - paso) * 100) / 100))
   const subir = () => setObjetivo((v) => Math.round((v + paso) * 100) / 100)
+  // Multiplicador activo (para resaltar la pastilla) y aplicar uno
+  const multActivo = MULTIPLICADORES.find((m) => Math.abs(factor - m) < 0.001)
+  const aplicarMult = (m) => setObjetivo(Math.round(receta.rendimiento * m * 100) / 100)
 
   return (
     <div>
@@ -86,16 +95,31 @@ export default function RecipeView() {
         {/* Escalado */}
         <div className="section">
           <h2>⚖️ Porciones</h2>
-          <div className="scaler">
-            <span className="label">
-              Quiero preparar para:
-            </span>
+
+          {/* Multiplicadores rápidos */}
+          <div className="mult-row" role="group" aria-label="Multiplicador rápido">
+            {MULTIPLICADORES.map((m) => (
+              <button
+                key={m}
+                className={`mult ${multActivo === m ? 'on' : ''}`}
+                onClick={() => aplicarMult(m)}
+                aria-pressed={multActivo === m}
+              >
+                ×{m}
+              </button>
+            ))}
+          </div>
+
+          {/* Ajuste manual de la cantidad base */}
+          <div className="scaler" style={{ marginTop: 12 }}>
+            <span className="label">O ajusta a mano:</span>
             <div className="stepper">
               <button onClick={bajar} aria-label="Menos">−</button>
               <span className="value">{formatQty(objetivo)} {receta.unidadRendimiento}</span>
               <button onClick={subir} aria-label="Más">＋</button>
             </div>
           </div>
+
           {Math.abs(factor - 1) > 0.001 && (
             <p style={{ color: 'var(--texto-suave)', fontWeight: 600, marginTop: 8 }}>
               Cantidades ajustadas ×{formatQty(factor)} (receta base: {formatQty(receta.rendimiento)} {receta.unidadRendimiento})

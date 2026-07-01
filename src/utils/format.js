@@ -50,3 +50,12 @@ export function normalize(s) {
     .replace(/[̀-ͯ]/g, '')
     .trim()
 }
+
+// ¿La receta coincide con la búsqueda? Busca por NOMBRE y por INGREDIENTE.
+// Ej: "mango" encuentra recetas que tengan mango en los ingredientes.
+export function coincide(receta, q) {
+  const nq = normalize(q)
+  if (!nq) return true
+  if (normalize(receta.nombre).includes(nq)) return true
+  return (receta.ingredientes || []).some((i) => normalize(i.nombre).includes(nq))
+}
