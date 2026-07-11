@@ -665,3 +665,78 @@
 }
 .cook-ing-list li b { color: #E8A87C; min-width: 96px; font-size: 1.3rem; }
 .cook-ing-overlay .btn { min-height: 66px; font-size: 1.25rem; }
+
+/* ===========================================================
+   Inventario / insumos
+   =========================================================== */
+.insumo-list { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 10px; }
+.insumo-row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  background: var(--tarjeta);
+  border: 2px solid var(--borde);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.insumo-row.alerta { border-color: var(--error); background: #fdecea; }
+.insumo-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 14px 16px;
+  cursor: pointer;
+  color: var(--texto);
+  min-width: 0;
+}
+.insumo-nombre { font-weight: 800; font-size: 1.1rem; }
+.insumo-stock { display: flex; flex-direction: column; gap: 2px; }
+.insumo-stock b { font-size: 1.05rem; color: var(--texto); }
+.insumo-stock b.rojo, .rojo { color: var(--error); }
+.insumo-min { color: var(--texto-suave); font-size: .9rem; font-weight: 600; }
+.insumo-entrada {
+  flex: 0 0 auto;
+  width: 56px;
+  border: none;
+  border-left: 2px solid var(--borde);
+  background: var(--oliva);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.insumo-entrada:active { filter: brightness(.92); }
+
+/* Historial de movimientos */
+.mov-list { list-style: none; padding: 0; margin: 0; }
+.mov-list li {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  padding: 12px 2px; border-bottom: 2px dashed var(--crema-2);
+}
+.mov-tipo { font-weight: 800; min-width: 92px; }
+.mov-tipo.entrada { color: var(--ok); }
+.mov-tipo.salida { color: var(--terracota); }
+.mov-tipo.ajuste { color: var(--dorado-oscuro); }
+.mov-cant { font-weight: 700; }
+.mov-fecha { color: var(--texto-suave); font-size: .9rem; flex: 1; }
+
+.plan-list { list-style: none; padding: 0; margin: 0; }
+
+/* Badge de alerta (contador) */
+.nav-badge {
+  position: absolute;
+  top: 8px; right: 14px;
+  min-width: 24px; height: 24px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--error);
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+}

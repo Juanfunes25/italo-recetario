@@ -7,6 +7,10 @@ import RecipeEdit from './pages/RecipeEdit'
 import CookMode from './pages/CookMode'
 import Guia from './pages/Guia'
 import Settings from './pages/Settings'
+import Inventario from './pages/Inventario'
+import InsumoEdit from './pages/InsumoEdit'
+import Produccion from './pages/Produccion'
+import Compras from './pages/Compras'
 import BottomNav from './components/BottomNav'
 import PinModal from './components/PinModal'
 import InstallPrompt from './components/InstallPrompt'
@@ -49,6 +53,11 @@ export default function App() {
         <Route path="/receta/:id" element={<RecipeView />} />
         <Route path="/cocina/:id" element={<CookMode />} />
         <Route path="/guia" element={<Guia />} />
+        <Route path="/inventario" element={<Inventario />} />
+        <Route path="/produccion" element={<Produccion />} />
+        <Route path="/compras" element={<Compras />} />
+        <Route path="/insumo/nuevo" element={<SoloAdmin><InsumoEdit /></SoloAdmin>} />
+        <Route path="/insumo/:id" element={<SoloAdmin><InsumoEdit /></SoloAdmin>} />
         <Route path="/nueva" element={<SoloAdmin><RecipeEdit /></SoloAdmin>} />
         <Route path="/editar/:id" element={<SoloAdmin><RecipeEdit /></SoloAdmin>} />
         <Route path="/ajustes" element={<SoloAdmin><Settings /></SoloAdmin>} />

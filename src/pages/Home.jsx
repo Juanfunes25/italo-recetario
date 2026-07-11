@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import SearchBar from '../components/SearchBar'
 import RecipeCard from '../components/RecipeCard'
 import { useRecipes } from '../context/RecipesContext'
+import { useInventario } from '../context/InventarioContext'
 import { CATEGORIAS, coincide } from '../utils/format'
 import { getRecientesIds } from '../utils/recientes'
 
 export default function Home() {
   const { recetas, cargando } = useRecipes()
+  const { bajoMinimo } = useInventario()
   const [busqueda, setBusqueda] = useState('')
   const navigate = useNavigate()
 
@@ -87,8 +89,21 @@ export default function Home() {
           </div>
 
           <button
+            className="btn btn--olive btn--full btn--lg no-sel"
+            style={{ marginTop: 16, position: 'relative' }}
+            onClick={() => navigate('/inventario')}
+          >
+            📦 Inventario e insumos
+            {bajoMinimo.length > 0 && (
+              <span className="nav-badge" aria-label={`${bajoMinimo.length} insumos bajos`}>
+                {bajoMinimo.length}
+              </span>
+            )}
+          </button>
+
+          <button
             className="btn btn--gold btn--full btn--lg no-sel"
-            style={{ marginTop: 16 }}
+            style={{ marginTop: 12 }}
             onClick={() => navigate('/guia')}
           >
             📖 Guía de servicio y normas

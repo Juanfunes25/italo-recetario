@@ -2,15 +2,19 @@
 // Capa de datos — IndexedDB (vía idb).
 // Las recetas (incluidas sus fotos en base64) se guardan aquí.
 // Es persistente: no se pierde al cerrar la app ni sin internet.
-// Si mañana quieres sincronizar con la nube, solo agregas un módulo
-// que lea/escriba aquí y haga push/pull a tu backend.
+//
+// v2: se agregan los stores "insumos" (inventario de ingredientes base) y
+//     "movimientos" (entradas/salidas de inventario). La migración es
+//     aditiva: NO toca las recetas ni la config existentes.
 // ===========================================================
 import { openDB } from 'idb'
 
 const DB_NAME = 'italo-recetario'
-const DB_VERSION = 1
+const DB_VERSION = 2
 const STORE = 'recetas'
 const SETTINGS = 'config'
+const INSUMOS = 'insumos'
+const MOVIMIENTOS = 'movimientos'
 
 let _dbPromise = null
 
@@ -25,6 +29,16 @@ function getDB() {
         }
         if (!db.objectStoreNames.contains(SETTINGS)) {
           db.createObjectStore(SETTINGS, { keyPath: 'clave' })
+        }
+        // v2 — inventario
+        if (!db.objectStoreNames.contains(INSUMOS)) {
+          const i = db.createObjectStore(INSUMOS, { keyPath: 'id' })
+          i.createIndex('nombre', 'nombre')
+        }
+        if (!db.objectStoreNames.contains(MOVIMIENTOS)) {
+          const m = db.createObjectStore(MOVIMIENTOS, { keyPath: 'id' })
+          m.createIndex('insumoId', 'insumoId')
+          m.createIndex('fecha', 'fecha')
         }
       },
     })
@@ -71,4 +85,65 @@ export async function getSetting(clave, fallback = null) {
 export async function setSetting(clave, valor) {
   const db = await getDB()
   await db.put(SETTINGS, { clave, valor })
+}
+
+// ---- Insumos (inventario) ----
+export async function getAllInsumos() {
+  const db = await getDB()
+  return db.getAll(INSUMOS)
+}
+
+export async function getInsumo(id) {
+  const db = await getDB()
+  return db.get(INSUMOS, id)
+}
+
+export async function saveInsumo(insumo) {
+  const db = await getDB()
+  await db.put(INSUMOS, insumo)
+  return insumo
+}
+
+export async function deleteInsumo(id) {
+  const db = await getDB()
+  await db.delete(INSUMOS, id)
+}
+
+export async function bulkAddInsumos(insumos) {
+  const db = await getDB()
+  const tx = db.transaction(INSUMOS, 'readwrite')
+  await Promise.all(insumos.map((i) => tx.store.put(i)))
+  await tx.done
+}
+
+// Actualiza el stock de varios insumos y registra movimientos en una sola
+// transacción (para descuento por producción). `updates`: [{insumoId, nuevoStock}].
+export async function aplicarStockYMovimientos(updates, movimientos) {
+  const db = await getDB()
+  const tx = db.transaction([INSUMOS, MOVIMIENTOS], 'readwrite')
+  const sInsumos = tx.objectStore(INSUMOS)
+  const sMov = tx.objectStore(MOVIMIENTOS)
+  for (const u of updates) {
+    const insumo = await sInsumos.get(u.insumoId)
+    if (insumo) {
+      insumo.stock = u.nuevoStock
+      insumo.actualizado = u.fecha || insumo.actualizado
+      await sInsumos.put(insumo)
+    }
+  }
+  for (const m of movimientos) await sMov.put(m)
+  await tx.done
+}
+
+// ---- Movimientos de inventario ----
+export async function getMovimientos(insumoId = null) {
+  const db = await getDB()
+  if (insumoId) return db.getAllFromIndex(MOVIMIENTOS, 'insumoId', insumoId)
+  return db.getAll(MOVIMIENTOS)
+}
+
+export async function saveMovimiento(mov) {
+  const db = await getDB()
+  await db.put(MOVIMIENTOS, mov)
+  return mov
 }

@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import { AdminProvider } from './context/AdminContext'
 import { RecipesProvider } from './context/RecipesContext'
+import { InventarioProvider } from './context/InventarioContext'
 
 // Actualización automática: cuando el service worker instala una versión
 // nueva y toma el control, recargamos la página una vez para que el usuario
@@ -23,7 +24,9 @@ createRoot(document.getElementById('root')).render(
     <HashRouter>
       <AdminProvider>
         <RecipesProvider>
-          <App />
+          <InventarioProvider>
+            <App />
+          </InventarioProvider>
         </RecipesProvider>
       </AdminProvider>
     </HashRouter>
