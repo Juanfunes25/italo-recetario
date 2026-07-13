@@ -5,7 +5,6 @@ import RecipeCard from '../components/RecipeCard'
 import { useRecipes } from '../context/RecipesContext'
 import { useInventario } from '../context/InventarioContext'
 import { CATEGORIAS, coincide } from '../utils/format'
-import { getRecientesIds } from '../utils/recientes'
 
 export default function Home() {
   const { recetas, cargando } = useRecipes()
@@ -19,14 +18,6 @@ export default function Home() {
       .filter((r) => coincide(r, busqueda))
       .sort((a, b) => a.nombre.localeCompare(b.nombre))
   }, [busqueda, recetas])
-
-  // Últimas 4 recetas abiertas que todavía existen
-  const recientes = useMemo(() => {
-    if (cargando) return []
-    return getRecientesIds(4)
-      .map((id) => recetas.find((r) => r.id === id))
-      .filter(Boolean)
-  }, [recetas, cargando])
 
   const conteo = (catId) => recetas.filter((r) => r.categoria === catId).length
 
@@ -54,20 +45,7 @@ export default function Home() {
         </div>
       ) : (
         <>
-          {recientes.length > 0 && (
-            <div className="section" style={{ marginTop: 18 }}>
-              <h2 style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                🕘 Usadas recientemente
-              </h2>
-              <div className="recipe-grid">
-                {recientes.map((r) => (
-                  <RecipeCard key={r.id} receta={r} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="section" style={{ marginTop: 22 }}>
+          <div className="section" style={{ marginTop: 18 }}>
             <h2 style={{ marginBottom: 12 }}>📂 Categorías</h2>
             <div className="cat-grid">
               {CATEGORIAS.map((c) => (
