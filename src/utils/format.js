@@ -32,15 +32,6 @@ export function formatQty(n) {
   return r.toFixed(2).replace(/\.?0+$/, '')
 }
 
-export function formatTime(min) {
-  if (!min) return '—'
-  const m = Number(min)
-  if (m < 60) return `${m} min`
-  const h = Math.floor(m / 60)
-  const r = m % 60
-  return r ? `${h} h ${r} min` : `${h} h`
-}
-
 // Normaliza texto para búsqueda (sin acentos, minúsculas)
 export function normalize(s) {
   return (s || '')

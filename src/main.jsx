@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { AdminProvider } from './context/AdminContext'
 import { RecipesProvider } from './context/RecipesContext'
 import { InventarioProvider } from './context/InventarioContext'
+import ErrorBoundary from './components/ErrorBoundary'
 
 // Actualización automática: cuando el service worker instala una versión
 // nueva y toma el control, recargamos la página una vez para que el usuario
@@ -21,14 +22,16 @@ if ('serviceWorker' in navigator) {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <HashRouter>
-      <AdminProvider>
-        <RecipesProvider>
-          <InventarioProvider>
-            <App />
-          </InventarioProvider>
-        </RecipesProvider>
-      </AdminProvider>
-    </HashRouter>
+    <ErrorBoundary>
+      <HashRouter>
+        <AdminProvider>
+          <RecipesProvider>
+            <InventarioProvider>
+              <App />
+            </InventarioProvider>
+          </RecipesProvider>
+        </AdminProvider>
+      </HashRouter>
+    </ErrorBoundary>
   </StrictMode>,
 )

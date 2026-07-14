@@ -29,13 +29,13 @@ export default defineConfig(({ command }) => {
         manifest: {
           name: 'Italo Recetario',
           short_name: 'Recetario',
-          description: 'Recetario digital de Italo Gelateria — helados, pan y bebidas.',
+          description: 'Recetario e inventario de producción de Italo Gelateria — pan, bebidas y comidas.',
           lang: 'es',
           // Rutas relativas => funcionan tanto en la raíz como bajo /italo-recetario/
           start_url: '.',
           scope: '.',
           display: 'standalone',
-          orientation: 'portrait',
+          // Sin orientation fija: la tablet de cocina puede usarse horizontal o vertical
           background_color: '#FAF4E8',
           theme_color: '#C5603C',
           icons: [

@@ -93,11 +93,11 @@ export default function RecipeEdit() {
     const limpia = {
       ...r,
       nombre: r.nombre.trim(),
-      minutos: Number(r.minutos) || 0,
-      rendimiento: Number(r.rendimiento) || 1,
+      // El rendimiento debe ser positivo: evita factores de escalado 0/negativos
+      rendimiento: Math.max(0.001, Number(r.rendimiento) || 1),
       ingredientes: r.ingredientes
         .filter((i) => i.nombre.trim())
-        .map((i) => ({ ...i, nombre: i.nombre.trim(), cantidad: Number(i.cantidad) || 0 })),
+        .map((i) => ({ ...i, nombre: i.nombre.trim(), cantidad: Math.max(0, Number(i.cantidad) || 0) })),
       pasos: r.pasos.filter((p) => p.texto.trim() || p.img).map((p) => ({ ...p, texto: p.texto.trim() })),
       notas: r.notas.trim(),
     }

@@ -14,6 +14,7 @@ import Compras from './pages/Compras'
 import BottomNav from './components/BottomNav'
 import PinModal from './components/PinModal'
 import InstallPrompt from './components/InstallPrompt'
+import OfflineBanner from './components/OfflineBanner'
 import { useAdmin } from './context/AdminContext'
 import { useRecipes } from './context/RecipesContext'
 
@@ -47,6 +48,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <OfflineBanner />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/categoria/:catId" element={<CategoryList />} />

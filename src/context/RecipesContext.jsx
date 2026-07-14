@@ -138,17 +138,20 @@ export function RecipesProvider({ children }) {
     setRecetas((prev) => prev.filter((r) => r.id !== id))
   }, [])
 
-  // Cuenta cuántas veces se abre una receta (para "más usadas")
+  // Cuenta cuántas veces se abre una receta (para "más usadas").
+  // El updater de setState debe ser puro (StrictMode lo ejecuta 2 veces),
+  // así que la escritura a IndexedDB se hace fuera de él.
   const registrarUso = useCallback(async (id) => {
+    let actualizada = null
     setRecetas((prev) => {
       const i = prev.findIndex((r) => r.id === id)
       if (i === -1) return prev
-      const actualizada = { ...prev[i], usos: (prev[i].usos || 0) + 1 }
-      saveRecipe(actualizada) // persiste en segundo plano
+      actualizada = { ...prev[i], usos: (prev[i].usos || 0) + 1 }
       const copia = [...prev]
       copia[i] = actualizada
       return copia
     })
+    if (actualizada) await saveRecipe(actualizada)
   }, [])
 
   // Vuelve a agregar cualquier receta del recetario base que falte

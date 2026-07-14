@@ -119,9 +119,9 @@ export function InventarioProvider({ children }) {
       id: uid('ins'),
       nombre: (datos.nombre || '').trim(),
       unidad: datos.unidad || 'g',
-      stock: Number(datos.stock) || 0,
-      minimo: Number(datos.minimo) || 0,
-      costo: datos.costo === '' || datos.costo == null ? null : Number(datos.costo),
+      stock: Math.max(0, Number(datos.stock) || 0),
+      minimo: Math.max(0, Number(datos.minimo) || 0),
+      costo: datos.costo === '' || datos.costo == null ? null : Math.max(0, Number(datos.costo)),
       proveedor: (datos.proveedor || '').trim(),
       creado: Date.now(),
       actualizado: Date.now(),
@@ -165,6 +165,7 @@ export function InventarioProvider({ children }) {
   // Registra una entrada (compra) o ajuste, sumando/estableciendo stock.
   const registrarMovimiento = useCallback(async (insumoId, { tipo, cantidad, motivo }) => {
     const cant = Number(cantidad) || 0
+    if (cant < 0) return // cantidades negativas no son válidas
     const insumo = insumosRef.current.find((x) => x.id === insumoId)
     if (!insumo) return
     let nuevoStock

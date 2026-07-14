@@ -147,3 +147,35 @@ export async function saveMovimiento(mov) {
   await db.put(MOVIMIENTOS, mov)
   return mov
 }
+
+// ---- Copia de seguridad (exportar / importar todo) ----
+export async function exportarTodo() {
+  const db = await getDB()
+  const [recetas, config, insumos, movimientos] = await Promise.all([
+    db.getAll(STORE),
+    db.getAll(SETTINGS),
+    db.getAll(INSUMOS),
+    db.getAll(MOVIMIENTOS),
+  ])
+  return { version: 2, app: 'italo-recetario', fecha: Date.now(), recetas, config, insumos, movimientos }
+}
+
+// Restaura una copia. Sobrescribe por id (no borra lo que no venga en el
+// respaldo), todo en una sola transacción.
+export async function importarTodo(datos) {
+  if (!datos || datos.app !== 'italo-recetario' || !Array.isArray(datos.recetas)) {
+    throw new Error('El archivo no es un respaldo válido del recetario')
+  }
+  const db = await getDB()
+  const tx = db.transaction([STORE, SETTINGS, INSUMOS, MOVIMIENTOS], 'readwrite')
+  for (const r of datos.recetas || []) tx.objectStore(STORE).put(r)
+  for (const c of datos.config || []) tx.objectStore(SETTINGS).put(c)
+  for (const i of datos.insumos || []) tx.objectStore(INSUMOS).put(i)
+  for (const m of datos.movimientos || []) tx.objectStore(MOVIMIENTOS).put(m)
+  await tx.done
+  return {
+    recetas: (datos.recetas || []).length,
+    insumos: (datos.insumos || []).length,
+    movimientos: (datos.movimientos || []).length,
+  }
+}
